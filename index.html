@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7911203/weather-icon-md.png">
+</head>
+<body>
+    <header>
+        <h1>OpenWeather API</h1>
+    </header>
+    <main>
+        <h3>Welcome to the best page to know the weather of any city in the world</h3>
+        <img class="im-w" src="https://images.ctfassets.net/hrltx12pl8hq/6TIZLa1AKeBel0yVO7ReIn/1fc0e2fd9fcc6d66b3cc733aa2547e11/weather-images.jpg?fit=fill&w=1200&h=630" alt="Different weather">
+        <p>Please, enter the name of the city you want to see the weather</p>
+        <label for="cityInput">Enter City:</label>
+        <input type="text" id="cityInput">
+        <button onclick="getWeather()">Get Weather</button>
+
+        <div id="weatherInfo" class="w-i"></div>
+        <script>
+            function getWeather(){
+                //Propia clave de API
+                const apiKey = 'cef90f2f07e5d8f55a7dd16f100f7b29';
+                // const apiKey = 'fb338bc706dba61f3b5c8fc9be664e72';
+
+                //Valor obtenido por usuario
+                const city = document.getElementById('cityInput').value;
+
+                //Construye URL de API
+                // const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}';
+                const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+
+                //Realiza solicitud a API
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        //Muestra informacion del clima
+                        const weatherInfoElement = document.getElementById('weatherInfo');
+                        weatherInfoElement.innerHTML = `<h2>Weather in ${data.name}</h2> <p>Temperature: ${data.main.temp} K</p> <p>Description: ${data.weather[0].description}</p>
+                        <img src="https://i.pinimg.com/564x/3c/5d/68/3c5d6864e32b32f8cb3e24cc7d0b115f.jpg" alt="Good day image">`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching weather data:', error);
+                    });
+            }
+        </script>
+    </main>
+    <footer>
+        <p>&copy; 2024 Zoe Carmona</p>
+    </footer>
+</body>
+</html>
